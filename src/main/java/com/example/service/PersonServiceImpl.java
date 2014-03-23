@@ -5,6 +5,7 @@ import com.force.api.ForceApi;
 import com.force.api.QueryResult;
 import com.force.sdk.oauth.context.ForceSecurityContextHolder;
 import com.force.sdk.oauth.context.SecurityContext;
+
 import org.springframework.stereotype.Service;
 
 import com.example.model.Person;
@@ -13,7 +14,7 @@ import java.util.List;
 
 @Service
 public class PersonServiceImpl implements PersonService {
-    
+
     private ForceApi getForceApi() {
         SecurityContext sc = ForceSecurityContextHolder.get();
 
@@ -23,18 +24,23 @@ public class PersonServiceImpl implements PersonService {
 
         return new ForceApi(s);
     }
-    
+
     public void addPerson(Person person) {
         getForceApi().createSObject("contact", person);
     }
 
+    public boolean emailExists(String email) {
+        QueryResult res = getForceApi().query("SELECT Id FROM contact WHERE Email = '" + email + "'");
+        return res.getTotalSize() > 0 ? true : false;
+    }
+
     public List<Person> listPeople() {
-        QueryResult<Person> res = getForceApi().query("SELECT Id, FirstName, LastName FROM contact", Person.class);
+        QueryResult<Person> res = getForceApi().query("SELECT Id, FirstName, LastName, Email FROM contact", Person.class);
         return res.getRecords();
     }
 
     public void removePerson(String id) {
         getForceApi().deleteSObject("contact", id);
     }
-    
+
 }
