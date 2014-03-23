@@ -2,9 +2,15 @@ package com.example.model;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.example.service.PersonService;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class Person {
+
+    @Autowired
+    private PersonService personService;
 
     @JsonProperty(value="Id")
     private String id;
@@ -17,6 +23,12 @@ public class Person {
 
     @JsonProperty(value="Email")
     private String email;
+
+    @JsonProperty(value="AccountId")
+    private String accountId;
+
+    @JsonProperty(value="Account")
+    private Account account;
 
     public String getId() {
         return id;
@@ -48,6 +60,22 @@ public class Person {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
 }
