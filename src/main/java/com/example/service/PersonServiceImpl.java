@@ -7,6 +7,7 @@ import com.force.sdk.oauth.context.ForceSecurityContextHolder;
 import com.force.sdk.oauth.context.SecurityContext;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.example.model.Person;
 
@@ -29,9 +30,11 @@ public class PersonServiceImpl implements PersonService {
         getForceApi().createSObject("contact", person);
     }
 
-    public boolean emailExists(String email) {
-        QueryResult res = getForceApi().query("SELECT Id FROM contact WHERE Email = '" + email + "'");
-        return res.getTotalSize() > 0 ? true : false;
+    public Person findPerson(String email) {
+        if (!StringUtils.hasText(email))
+            return null;
+        QueryResult<Person> res = getForceApi().query("SELECT Id, FirstName, LastName, Email FROM contact WHERE Email = '" + email + "'", Person.class);
+        return res.getTotalSize() > 0 ? res.getRecords().get(0) : null;
     }
 
     public List<Person> listPeople() {

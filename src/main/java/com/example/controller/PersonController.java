@@ -43,7 +43,7 @@ public class PersonController {
     public String addPerson(@ModelAttribute("person") @Valid Person person, BindingResult result, RedirectAttributes redirectAttributes) {
 
         if (result.hasFieldErrors("email"))
-            redirectAttributes.addFlashAttribute("error_message", "Person with this email already exists: " + person.getEmail());
+            redirectAttributes.addFlashAttribute("error_message", result.getFieldError("email").getDefaultMessage());
         else if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("error_message", "Uh Oh.... Something went wrong.");
         } else {
