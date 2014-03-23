@@ -32,7 +32,7 @@
             <div class="page-header">
                 <h1>Simple CRUD Page</h1>
             </div>
-            <c:if  test="${!empty error_message}">
+            <c:if test="${!empty error_message}">
                 <div class="alert alert-error">
                     ${error_message}
                 </div>
@@ -44,7 +44,11 @@
                 <form:input path="lastName" />
                 <form:label path="email">Email</form:label>
                 <form:input path="email" />
-                <input type="submit" value="Add Person" class="btn"/>
+                <form:label path="account.name">Account Name</form:label>
+                <form:input path="account.name" />
+                <div class="control-group">
+                    <input type="submit" value="Add Person" class="btn btn-primary"/>
+                </div>
             </form:form>
 
             <c:if  test="${!empty peopleList}">
@@ -54,6 +58,7 @@
                     <tr>
                         <th>Name</th>
                         <th>Email</th>
+                        <th>Account</th>
                         <th>&nbsp;</th>
                     </tr>
                     </thead>
@@ -62,6 +67,7 @@
                         <tr>
                             <td>${person.lastName}, ${person.firstName}</td>
                             <td>${person.email}</td>
+                            <td>${person.account.name}</td>
                             <td><form action="delete/${person.id}" method="post"><input type="submit" class="btn btn-danger btn-mini" value="Delete"/></form></td>
                         </tr>
                     </c:forEach>
