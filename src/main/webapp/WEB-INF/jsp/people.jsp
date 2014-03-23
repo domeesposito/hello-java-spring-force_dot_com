@@ -32,15 +32,20 @@
             <div class="page-header">
                 <h1>Simple CRUD Page</h1>
             </div>
+            <c:if  test="${!empty error_message}">
+                <div class="alert alert-error">
+                    ${error_message}
+                </div>
+            </c:if>
             <form:form method="post" action="add" commandName="person" class="form-vertical">
-
                 <form:label path="firstName">First Name</form:label>
                 <form:input path="firstName" />
                 <form:label path="lastName">Last Name</form:label>
                 <form:input path="lastName" />
+                <form:label path="email">Email</form:label>
+                <form:input path="email" />
                 <input type="submit" value="Add Person" class="btn"/>
             </form:form>
-
 
             <c:if  test="${!empty peopleList}">
                 <h3>People</h3>
@@ -48,6 +53,7 @@
                     <thead>
                     <tr>
                         <th>Name</th>
+                        <th>Email</th>
                         <th>&nbsp;</th>
                     </tr>
                     </thead>
@@ -55,6 +61,7 @@
                     <c:forEach items="${peopleList}" var="person">
                         <tr>
                             <td>${person.lastName}, ${person.firstName}</td>
+                            <td>${person.email}</td>
                             <td><form action="delete/${person.id}" method="post"><input type="submit" class="btn btn-danger btn-mini" value="Delete"/></form></td>
                         </tr>
                     </c:forEach>

@@ -15,6 +15,8 @@ public class Person {
     @JsonProperty(value="LastName")
     private String lastName;
 
+    @JsonProperty(value="Email")
+    private String email;
 
     public String getId() {
         return id;
@@ -38,6 +40,14 @@ public class Person {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
 }
