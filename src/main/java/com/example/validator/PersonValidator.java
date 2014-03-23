@@ -26,8 +26,10 @@ public class PersonValidator implements Validator {
         ValidationUtils.rejectIfEmpty(errors, "firstName", "", "First name cannot be blank");
         ValidationUtils.rejectIfEmpty(errors, "lastName", "", "Last name cannot be blank");
         Person person = (Person) arg0;
-        if (StringUtils.hasText(person.getEmail()) && personService.emailExists(person.getEmail())) {
-            errors.rejectValue("email", "", "Email already exists");
+        person = personService.findPerson(person.getEmail());
+        if (person != null) {
+            errors.rejectValue("email", "", "Person with this email already exists: " +
+                person.getFirstName() + " " + person.getLastName());
         }
     }
 
